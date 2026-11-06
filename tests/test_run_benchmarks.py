@@ -60,7 +60,7 @@ def test_update_metadata(benchmarks_checkout, monkeypatch):
     assert metadata["benchmark_hash"] == "215d35"
     assert (
         metadata["github_action_url"]
-        == "https://github.com/faster-cpython/bench_runner/actions/runs/12345"
+        == "https://github.com/python/bench_runner/actions/runs/12345"
     )
 
 
@@ -120,7 +120,7 @@ def test_run_benchmarks(benchmarks_checkout, monkeypatch):
     assert metadata["benchmark_hash"] == "215d35"
     assert (
         metadata["github_action_url"]
-        == "https://github.com/faster-cpython/bench_runner/actions/runs/12345"
+        == "https://github.com/python/bench_runner/actions/runs/12345"
     )
 
     assert len(benchmarks) == 3
