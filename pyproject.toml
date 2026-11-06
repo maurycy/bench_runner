@@ -45,10 +45,11 @@ bench_runner = ["templates/*"]
 
 [tool.ruff]
 target-version = "py311"
-line-length = 79
+line-length = 88
 fix = true
 
 [tool.ruff.lint]
+extend-select = ["W605"]
 extend-ignore = ["E203", "E402"]
 
 [tool.pytest.ini_options]

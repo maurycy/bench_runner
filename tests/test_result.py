@@ -14,9 +14,7 @@ DATA_PATH = Path(__file__).parent / "data"
 
 def _copy_results(tmp_path):
     results_path = tmp_path / "results"
-    shutil.copyfile(
-        DATA_PATH / "bench_runner.toml", tmp_path / "bench_runner.toml"
-    )
+    shutil.copyfile(DATA_PATH / "bench_runner.toml", tmp_path / "bench_runner.toml")
     shutil.copytree(DATA_PATH / "results", tmp_path / "results")
     return results_path
 
@@ -92,9 +90,7 @@ def test_from_scratch(monkeypatch):
     def get_git_commit_date(*args):
         return "2022-11-19T20:47:09+00:00"
 
-    monkeypatch.setattr(
-        mod_result.git, "get_git_commit_date", get_git_commit_date
-    )
+    monkeypatch.setattr(mod_result.git, "get_git_commit_date", get_git_commit_date)
 
     def gethostname(*args):
         return "pyperf"

@@ -33,9 +33,7 @@ if __name__ == "__main__":
 
             init()
         except Exception:
-            sys.stderr.write(
-                "pytest-cov: Failed to setup subprocess coverage."
-            )
+            sys.stderr.write("pytest-cov: Failed to setup subprocess coverage.")
 
     command = len(sys.argv) >= 2 and sys.argv[1] or ""
 

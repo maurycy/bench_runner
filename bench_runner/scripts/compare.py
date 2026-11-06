@@ -75,9 +75,7 @@ def compare_pair(
     for func, suffix, file_type in comparison.get_files():
         output_filename = util.apply_suffix(output_dir / name, suffix)
         func(output_filename)
-        entry.append(
-            f"[{util.TYPE_TO_ICON[file_type]}]({output_filename.name})"
-        )
+        entry.append(f"[{util.TYPE_TO_ICON[file_type]}]({output_filename.name})")
 
     return "".join(entry)
 
@@ -96,9 +94,7 @@ def get_first_result_for_machine(
     results: Iterable[mod_result.Result], machine: str | None
 ) -> mod_result.Result:
     return next(
-        result
-        for result in results
-        if machine is None or result.nickname == machine
+        result for result in results if machine is None or result.nickname == machine
     )
 
 
@@ -116,13 +112,7 @@ def do_one_to_many(
     for hash, _, name, results in parsed_commits[1:]:
         result = get_first_result_for_machine(results, machine)
         link = compare_pair(
-            output_dir,
-            machine,
-            first_name,
-            first_result,
-            name,
-            result,
-            counter,
+            output_dir, machine, first_name, first_result, name, result, counter
         )
         write_row(fd, [name_and_hash(name, hash), link])
 
@@ -145,13 +135,7 @@ def do_many_to_many(
             else:
                 result2 = get_first_result_for_machine(results2, machine)
                 link = compare_pair(
-                    output_dir,
-                    machine,
-                    name1,
-                    result1,
-                    name2,
-                    result2,
-                    counter,
+                    output_dir, machine, name1, result1, name2, result2, counter
                 )
                 columns.append(link)
         write_row(fd, columns)
@@ -160,9 +144,7 @@ def do_many_to_many(
 
 
 def _main_with_hashes(
-    commits: Sequence[str],
-    output_dir: Path,
-    comparison_type: Literal["1:n", "n:n"],
+    commits: Sequence[str], output_dir: Path, comparison_type: Literal["1:n", "n:n"]
 ):
     cfg = config.get_config()
 
@@ -179,8 +161,7 @@ def _main_with_hashes(
         subresults = [
             result
             for result in results
-            if result.cpython_hash.startswith(commit_hash)
-            and result.flags == flags
+            if result.cpython_hash.startswith(commit_hash) and result.flags == flags
         ]
 
         if len(subresults) == 0:
@@ -204,9 +185,7 @@ def _main_with_hashes(
             total = (len(parsed_commits) - 1) * len(machines)
             func = do_one_to_many
         case "n:n":
-            total = ((len(parsed_commits) ** 2) - len(parsed_commits)) * len(
-                machines
-            )
+            total = ((len(parsed_commits) ** 2) - len(parsed_commits)) * len(machines)
             func = do_many_to_many
         case _:
             raise ValueError(f"Unknown comparison type {comparison_type}")
@@ -220,9 +199,7 @@ def _main_with_hashes(
     rich.print()
 
 
-def _main_with_files(
-    commits: Sequence[str], output_dir: Path, comparison_type: str
-):
+def _main_with_files(commits: Sequence[str], output_dir: Path, comparison_type: str):
     parsed_results = []
     for commit in commits:
         if "," in commit:
@@ -232,12 +209,7 @@ def _main_with_files(
             commit_path = Path(commit)
             name = commit_path.stem
         parsed_results.append(
-            (
-                name,
-                [],
-                name,
-                [mod_result.Result.from_arbitrary_filename(commit_path)],
-            )
+            (name, [], name, [mod_result.Result.from_arbitrary_filename(commit_path)])
         )
 
     match comparison_type:
@@ -259,9 +231,7 @@ def _main_with_files(
 
 
 def _main(
-    commits: Sequence[str],
-    output_dir: PathLike,
-    comparison_type: Literal["1:n", "n:n"],
+    commits: Sequence[str], output_dir: PathLike, comparison_type: Literal["1:n", "n:n"]
 ):
     if len(commits) < 2:
         raise ValueError("Must provide at least 2 commits")

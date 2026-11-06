@@ -61,11 +61,7 @@ def get_benchmark_names(benchmarks: str) -> list[str]:
         encoding="utf-8",
     )
 
-    return [
-        line[2:].strip()
-        for line in output.splitlines()
-        if line.startswith("- ")
-    ]
+    return [line[2:].strip() for line in output.splitlines() if line.startswith("- ")]
 
 
 def run_benchmarks(
@@ -172,9 +168,7 @@ def collect_pystats(
                 pass
             else:
                 if individual and fork is not None and ref is not None:
-                    run_summarize_stats(
-                        python, fork, ref, benchmark, flags=flags
-                    )
+                    run_summarize_stats(python, fork, ref, benchmark, flags=flags)
 
             for filename in pystats_dir.iterdir():
                 os.rename(filename, Path(tempdir) / filename.name)
@@ -188,9 +182,7 @@ def collect_pystats(
             benchmark_links = []
 
         if fork is not None and ref is not None:
-            run_summarize_stats(
-                python, fork, ref, "all", benchmark_links, flags=flags
-            )
+            run_summarize_stats(python, fork, ref, "all", benchmark_links, flags=flags)
 
 
 def get_perf_lines(files: Iterable[PathLike]) -> Iterable[str]:
@@ -264,10 +256,7 @@ def collect_perf(python: PathLike, benchmarks: str):
                 PROFILING_RESULTS / f"{benchmark}.perf.csv",
             )
         else:
-            print(
-                f"No perf.data files generated for {benchmark}",
-                file=sys.stderr,
-            )
+            print(f"No perf.data files generated for {benchmark}", file=sys.stderr)
 
     for filename in Path(".").glob(perf_data_glob):
         filename.unlink()
@@ -304,11 +293,7 @@ def update_metadata(
 
 
 def copy_to_directory(
-    filename: PathLike,
-    python: PathLike,
-    fork: str,
-    ref: str,
-    flags: Iterable[str],
+    filename: PathLike, python: PathLike, fork: str, ref: str, flags: Iterable[str]
 ) -> None:
     result = Result.from_scratch(python, fork, ref, flags=flags)
     result.filename.parent.mkdir(parents=True, exist_ok=True)
@@ -366,8 +351,7 @@ def run_summarize_stats(
                 fd.write(
                     md_link(
                         name,
-                        str(Path(result.filename.name).with_suffix(""))
-                        + f"-{name}.md",
+                        str(Path(result.filename.name).with_suffix("")) + f"-{name}.md",
                     )
                 )
                 fd.write(", ")
@@ -387,10 +371,7 @@ def select_benchmarks(benchmarks: str):
     cfg = config.get_config()
     if benchmarks == "all":
         return ",".join(
-            [
-                "all",
-                *[f"-{x}" for x in cfg.benchmarks.excluded_benchmarks if x],
-            ]
+            ["all", *[f"-{x}" for x in cfg.benchmarks.excluded_benchmarks if x]]
         )
     elif benchmarks == "all_and_excluded":
         return "all"
@@ -434,9 +415,7 @@ def main():
         formatter_class=rich_argparse.ArgumentDefaultsRichHelpFormatter,
     )
     parser.add_argument(
-        "mode",
-        choices=["benchmark", "perf", "pystats"],
-        help="The mode of execution",
+        "mode", choices=["benchmark", "perf", "pystats"], help="The mode of execution"
     )
     parser.add_argument("python", help="The path to the Python executable")
     parser.add_argument("fork", help="The fork of CPython")
@@ -448,9 +427,7 @@ def main():
         action="store_true",
         help="Run in a special mode for unit testing",
     )
-    parser.add_argument(
-        "--run_id", default=None, type=str, help="The github run id"
-    )
+    parser.add_argument("--run_id", default=None, type=str, help="The github run id")
     parser.add_argument(
         "--individual",
         action="store_true",
@@ -492,8 +469,6 @@ if __name__ == "__main__":
 
             init()
         except Exception:
-            sys.stderr.write(
-                "pytest-cov: Failed to setup subprocess coverage."
-            )
+            sys.stderr.write("pytest-cov: Failed to setup subprocess coverage.")
 
     main()

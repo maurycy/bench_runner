@@ -61,9 +61,7 @@ def md_link(text: str, link: str, root: PathLike | None = None) -> str:
     Formats a Markdown link. The link is resolved relative to the given root.
     """
     if root is not None:
-        link = str(
-            Path(link).resolve().relative_to(Path(root).parent.resolve())
-        )
+        link = str(Path(link).resolve().relative_to(Path(root).parent.resolve()))
     if not str(link).startswith("http"):
         link = "/".join(quote(x) for x in Path(link).parts)
     return f"[{text}]({link})"
