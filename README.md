@@ -98,7 +98,7 @@ You may limit the number of cores used to build Python with the `use_cores` opti
 use_cores = 2
 ```
 
-You may set a maximum runtime for benchmark jobs on a runner with `timeout_minutes`. If unset, the per-OS default in the workflow template applies (Linux: 1440, others: the GitHub default).
+Set `timeout_minutes` to a positive integer to limit a runner's benchmark job runtime in minutes. If omitted, the workflow template's default applies (Linux: 1440; otherwise GitHub's default).
 
 ```
 timeout_minutes = 210

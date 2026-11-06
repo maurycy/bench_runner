@@ -23,6 +23,7 @@ from bench_runner import flags
 from bench_runner import runners
 from bench_runner.util import PathLike
 
+
 ROOT_PATH = Path()
 TEMPLATE_PATH = Path(__file__).parents[1] / "templates"
 WORKFLOW_PATH = Path() / ".github" / "workflows"
@@ -178,10 +179,9 @@ def generate__benchmark(src: Any) -> Any:
         runner_template["runs-on"].append(runner.github_runner_name)
 
         if runner.timeout_minutes is not None:
-            # Insert right after runs-on for readable YAML, regardless of
-            # whether the per-OS skeleton already had a timeout-minutes key.
+            # Keep the timeout immediately after runs-on in generated YAML.
             runner_template.pop("timeout-minutes", None)
-            idx = list(runner_template.keys()).index("runs-on") + 1
+            idx = list(runner_template).index("runs-on") + 1
             runner_template.insert(idx, "timeout-minutes", runner.timeout_minutes)
 
         machine_clauses = [
