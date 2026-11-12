@@ -1,9 +1,11 @@
 version: 2
 updates:
   - package-ecosystem: "github-actions"
-    directory: "/"
+    directories:
+      - "/"
+      - "/bench_runner/templates"
     schedule:
-      interval: "quarterly"
+      interval: "monthly"
     groups:
       actions:
         patterns: ["*"]
@@ -13,9 +15,10 @@ updates:
   - package-ecosystem: "pip"
     directory: "/"
     schedule:
-      interval: "quarterly"
+      interval: "monthly"
     groups:
       pip:
         patterns: ["*"]
+        exclude-patterns: ["pyperf"]
     cooldown:
       default-days: 14
