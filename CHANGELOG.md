@@ -7,6 +7,11 @@ override its benchmark job timeout.
 
 ### Bugfixes
 
+#### Reuse checkouts at the requested commit
+
+When a repository is already checked out at the requested full commit hash,
+reuse it instead of deleting and cloning it again.
+
 #### Use PGO on weekly builds
 
 Since 2.0.0, PGO was not being used on weekly builds. This is now fixed.
