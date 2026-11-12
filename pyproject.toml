@@ -32,7 +32,6 @@ test = [
     "pytest==8.4.1",
     "pytest-cov==6.2.1",
     "pytest-xdist==3.8.0",
-    "ruff==0.15.7",
 ]
 
 [tool.setuptools_scm]
