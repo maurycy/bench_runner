@@ -28,10 +28,10 @@ dynamic = ["version"]
 [project.optional-dependencies]
 test = [
     "black==25.1.0",
-    "filelock==3.29.0",
-    "flake8==7.3.0",
+    "filelock==4.2.9",
+    "flake8==7.5.0",
     "pyright==1.1.414",
-    "pytest==8.4.1",
+    "pytest==9.2.0",
     "pytest-cov==6.2.1",
     "pytest-xdist==3.8.0",
 ]
