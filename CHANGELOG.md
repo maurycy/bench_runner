@@ -7,6 +7,12 @@ override its benchmark job timeout.
 
 ### Bugfixes
 
+#### Build against OpenSSL 3 on macOS
+
+macOS builds now default to Homebrew's `openssl@3` instead of the removed `openssl@1.1`.
+If `openssl@3` is not installed, run `brew install openssl@3` on existing macOS
+runners before you update `bench_runner`.
+
 #### Reuse checkouts at the requested commit
 
 When a repository is already checked out at the requested full commit hash,
