@@ -25,6 +25,10 @@ name: _generate
 jobs:
   generate-results:
     runs-on: ubuntu-latest
+    concurrency:
+      group: generate-results
+      cancel-in-progress: false
+      queue: max
     steps:
       - name: Checkout benchmarking
         uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
@@ -49,5 +53,6 @@ jobs:
         uses: EndBug/add-and-commit@290ea2c423ad77ca9c62ae0f5b224379612c0321 #v10.0.0
         if: ${{ !inputs.dry_run }}
         with:
+          pull: --rebase --autostash origin main
           add: "['results', 'README.md', 'RESULTS.md', 'longitudinal.svg', 'longitudinal.json', 'configs.svg', 'configs.json', 'memory_long.svg', 'memory_long.json', 'memory_configs.svg', 'memory_configs.json']"
           message: Benchmarking results for @${{ github.actor }}
