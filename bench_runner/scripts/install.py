@@ -132,10 +132,6 @@ def add_flag_env(jobs: dict[str, Any]):
         if "steps" in job:
             job.setdefault("env", {})
             job["env"]["flags"] = flag_value
-            for step in job["steps"]:
-                for key, value in step.get("env", {}).items():
-                    if isinstance(value, str):
-                        step["env"][key] = value.replace("${{ env.flags }}", flag_value)
 
 
 def generate__benchmark(src: Any) -> Any:
